@@ -18,6 +18,20 @@ module Zad1_8 =
     Console.WriteLine(str 3 1)
     Console.WriteLine(str 4 2)
 
+module Zad1_8v2 = 
+    Console.WriteLine("\nZad1_8v2")
+    
+    let DwumianNewtona = fun(n, k) ->
+        let rec loop = function
+            | (n,k) when k = 0 || k = n -> 1
+            | (n,k) when 0 < k && k < n -> loop((n-1), k) + loop((n-1), (k-1))
+            | _ -> 0
+        loop (n, k)
+    
+    let str = fun n k fn -> $"(n:{n}|k:{k}) = {fn(n,k)}"
+    Console.WriteLine(str 3 1 DwumianNewtona)
+    Console.WriteLine(str 4 2 DwumianNewtona)
+
 
 module Zad1_13 = 
     Console.WriteLine("\nZad1_13")
