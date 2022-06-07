@@ -28,8 +28,6 @@ namespace Lab9.Zad3_9
 
             public S Map<S>(Func<T, bool>? filter = null) where S : IList<T>, new(){
                 var el = root;
-                Console.WriteLine(root.Value);
-
                 var list = new S();
                 while(el.Next != null){
                     el = el.Next;
@@ -39,6 +37,18 @@ namespace Lab9.Zad3_9
                 return list;
             }
 
+
+            public IEnumerable<T> MapLazzy(Func<T, bool>? filter = null){
+                var el = root;
+
+                while(el.Next != null){
+                    el = el.Next;
+                    if(filter == null || filter(el.Value))
+                        yield return el.Value;
+                }
+                yield break;
+            }
+
         }
 
         public static void PMain()
@@ -46,9 +56,14 @@ namespace Lab9.Zad3_9
             var l = new MyList<string>(new []{"ala", "tomek", "romek"});
             var list = l.Map<List<String>>();
             list.ForEach(Console.WriteLine);
-
             l.Map<List<String>>(s=>s.StartsWith("al")).ForEach(Console.WriteLine);
 
+            Console.WriteLine("Lazzy");
+            var l2 = l.MapLazzy();
+            l2.ToList().ForEach(Console.WriteLine);
+            l.MapLazzy(s=>s.Length>4).ToList().ForEach(Console.WriteLine);
+
+            
         }
 
     }
