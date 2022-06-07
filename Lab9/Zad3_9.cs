@@ -49,6 +49,17 @@ namespace Lab9.Zad3_9
                 yield break;
             }
 
+            public IEnumerable<int> GenLazzy(){
+                var r = new Random();
+                while(true){
+                    var s = r.Next(-100,100);
+                    Console.WriteLine($"Lazzy gen: {s}");               
+                    if(s < -10) 
+                        yield break;
+                    yield return s;
+                }
+           }
+
         }
 
         public static void PMain()
@@ -63,7 +74,14 @@ namespace Lab9.Zad3_9
             l2.ToList().ForEach(Console.WriteLine);
             l.MapLazzy(s=>s.Length>4).ToList().ForEach(Console.WriteLine);
 
+
+
             
+            foreach(var s in l.GenLazzy()){
+                Console.WriteLine($"Lazzy for: {s}");               
+            }
+
+
         }
 
     }
