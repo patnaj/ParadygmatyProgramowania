@@ -47,7 +47,7 @@ namespace Lab8.Zad2_1
 
     public class Program
     {
-        public static void Main()
+        public static void PMain()
         {
             try
             {
