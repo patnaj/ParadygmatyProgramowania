@@ -45,6 +45,38 @@ module Zad3_4 =
     let list = nPierwszych 5
     Console.WriteLine($"{(list)} \t [2] -> {(elementIsnieje(list, 2))}, \t [8] -> {(elementIsnieje(list, 8))}")
 
+
+/// ---------------- wyszukanie listy indesków
+module Zad3_5a = 
+    open Zad3_1 // dodaje moduł z listą
+
+    let rand = (new System.Random())
+    let nRand (n) = 
+        let rec recur = fun (i, n) -> if i < n then Wezel(rand.Next(1, 10), recur (i+1, n)) else Pusta
+        recur (0 ,n)
+
+    let rec Zanjdz (l : Lista<'a>, e :('a) -> Boolean, i:int) : int*Lista<'a> = 
+        match l with
+        | Pusta ->  (-1,l)
+        | Wezel(lval, lnext) when e(lval) -> (i,l)
+        | Wezel(lval, lnext) -> Zanjdz(lnext, e, i+1)
+
+    // warunek wyszukiwania - labda 
+    let war = fun (a) -> a = 2
+    let list = nRand 5
+    Console.WriteLine($"{(list)} \t [2] -> {(Zanjdz(list, war,0))}, \t [8] -> {(Zanjdz(list, (fun (a)->a=8), 0))}")
+
+    let rec ZanjdzListe = fun (l : Lista<'a>, e :('a) -> Boolean, i:int) -> 
+        match Zanjdz(l, e, i) with
+        | (i, Pusta) -> Pusta
+        | (i, Wezel(lval, lnext)) -> Wezel(i, ZanjdzListe(lnext, e, i+1))        
+
+
+    Console.WriteLine($"{(list)} \t [2] -> {(ZanjdzListe(list, war,0))}, \t [8] -> {(ZanjdzListe(list, (fun a->a=8), 0))}")
+/// ----------------
+
+
+
 module Zad3_6 = 
     open Zad3_1 // dodaje moduł z listą
     Console.WriteLine("\nZad3_6")
